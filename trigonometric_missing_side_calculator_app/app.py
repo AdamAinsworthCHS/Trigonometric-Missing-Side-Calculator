@@ -10,9 +10,10 @@ from PyQt6.QtWidgets import (
     QApplication,
     QVBoxLayout,
     QWidget,
-    QSpinBox
+
 )
 
+import math
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -28,11 +29,20 @@ class MainWindow(QMainWindow):
         known_side_length_line.setRange(0, 999999999999)
         known_side_hoa_line = QComboBox()
         known_side_hoa_line.addItems(["Hypotenuse", "Opposite", "Adjacent"])
+        unknown_side_hoa_line = QComboBox()
+        unknown_side_hoa_line.addItems(["Hypotenuse", "Opposite", "Adjacent"])
+        title_label = QLabel("Trigonometric Missing Side Calculator")
+        result_label = QLabel("Results: ")
+        submit_button = QPushButton("Calculate")
         layout = QVBoxLayout()
         widgets = [
+            title_label,
             measure_theta_line,
             known_side_length_line,
-            known_side_hoa_line
+            known_side_hoa_line,
+            unknown_side_hoa_line,
+            submit_button,
+            result_label
         ]
 
         for w in widgets:
