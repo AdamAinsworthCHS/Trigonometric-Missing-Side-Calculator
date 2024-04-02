@@ -9,11 +9,16 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QApplication,
     QVBoxLayout,
-    QWidget,
+    QWidget
 
 )
 
-import math
+from math import (
+    sin,
+    cos,
+    tan,
+    degrees
+)
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -21,7 +26,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Widgets App")
-        
+
         measure_theta_line = QDoubleSpinBox()
         measure_theta_line.setRange(0, 90)
         known_side_length_line = QDoubleSpinBox()
@@ -42,13 +47,21 @@ class MainWindow(QMainWindow):
         ])
         title_label = QLabel("Trigonometric Missing Side Calculator")
         result_label = QLabel("Results: ")
+        measure_theta_line_label = QLabel("Measure of Theta")
+        known_side_length_line_label = QLabel("Length of the Known Side")
+        known_side_hoa_line_label = QLabel("HOA of the Known Side")
+        unknown_side_hoa_line_label = QLabel("HOA of the Unknown Side")
         submit_button = QPushButton("Calculate")
         layout = QVBoxLayout()
         widgets = [
             title_label,
+            measure_theta_line_label,
             measure_theta_line,
+            known_side_length_line_label,
             known_side_length_line,
+            known_side_hoa_line_label,
             known_side_hoa_line,
+            unknown_side_hoa_line_label,
             unknown_side_hoa_line,
             submit_button,
             result_label
@@ -65,17 +78,22 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
         def calculate():
-            known_side_hoa_line_var = str(known_side_hoa_line.currentText)
-            unknown_side_hoa_line_var = str(known_side_hoa_line.currentText)
+            known_side_hoa_line_var = str(known_side_hoa_line.currentText())
+            unknown_side_hoa_line_var = str(unknown_side_hoa_line.currentText())
             known_side_length_line_var = float(known_side_length_line.value())
             measure_theta_line_var = float(measure_theta_line.value())
-            if known_side_hoa_line_var == "Opposite" or unknown_side_hoa_line_var == "Opposite" and known_side_hoa_line_var == "Hypotenuse" or unknown_side_hoa_line_var == "Hypotenuse":
-                trig_function = "sin"
-            elif known_side_hoa_line_var == "Adjacent" or unknown_side_hoa_line_var == "Adjacent" and known_side_hoa_line_var == "Hypotenuse" or unknown_side_hoa_line_var == "Hypotenuse":
-                trig_function = "sin"
+            if known_side_hoa_line_var == "Opposite" or unknown_side_hoa_line_var == "Opposite":
+                if known_side_hoa_line_var == "Hypotenuse" or unknown_side_hoa_line_var == "Hypotenuse":
+                    trig_function = "sin"
+            elif known_side_hoa_line_var == "Adjacent" or unknown_side_hoa_line_var == "Adjacent":
+                if known_side_hoa_line_var == "Hypotenuse" or unknown_side_hoa_line_var == "Hypotenuse":
+                    trig_function = "cos"
+            elif known_side_hoa_line_var == "Opposite" or unknown_side_hoa_line_var == "Opposite":
+                if known_side_hoa_line_var == "Adjacent" or unknown_side_hoa_line_var == "Adjacent":
+                    trig_function = "tan"
             else:
-                trig_function = "tan"
-
+                exit("NO TRIG FUNCTION FOUND")
+            
             if trig_function == "sin":
                 if known_side_hoa_line_var == "Opposite":
                     trig_1 = known_side_length_line_var
@@ -98,19 +116,20 @@ class MainWindow(QMainWindow):
                     trig_1 = "x"
                     trig_2 = known_side_length_line_var
             if trig_function == "sin":
-                theta_trig = math.sin(measure_theta_line_var)
+                theta_trig = sin(degrees(measure_theta_line_var))
             elif trig_function == "cos":
-                theta_trig = math.cos(measure_theta_line_var)
+                theta_trig = cos(degrees(measure_theta_line_var))
             else:
-                theta_trig = math.tan(measure_theta_line_var)
+                theta_trig = tan(degrees(measure_theta_line_var))
             if trig_2 == "x":
                 missing_length = trig_1 / theta_trig
             else:
                 missing_length = theta_trig * trig_2
+            print(theta_trig)
             result_label.setText("Results: " + str(missing_length))
-        
+
         submit_button.clicked.connect(calculate)
-        
+
 
 app = QApplication(sys.argv)
 window = MainWindow()
