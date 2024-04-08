@@ -17,7 +17,8 @@ from math import (
     sin,
     cos,
     tan,
-    radians
+    radians,
+    degrees
 )
 
 # Subclass QMainWindow to customize your application's main window
@@ -80,9 +81,8 @@ class MainWindow(QMainWindow):
         def calculate():
             known_hoa_var = str(known_side_hoa_line.currentText())
             known_side_length_line_var = float(known_side_length_line.value())
-            measure_theta_line_var = float(measure_theta_line.value())
+            measure_theta_line_var = degrees(measure_theta_line.value())
             trig_function = find_trig_function()
-            print(trig_function)
             if trig_function == "error":
                 return
             if trig_function == "sin":
@@ -108,13 +108,10 @@ class MainWindow(QMainWindow):
                     trig_2 = known_side_length_line_var
             if trig_function == "sin":
                 theta_trig = (sin(radians(measure_theta_line_var)))
-                print("it's sin time!")
             elif trig_function == "cos":
                 theta_trig = (cos(radians(measure_theta_line_var)))
-                print("it's cos time!")
             elif trig_function == "tan":
                 theta_trig = (tan(radians(measure_theta_line_var)))
-                print("it's tan time!")
             print(theta_trig)
             if trig_2 == "x":
                 missing_length = trig_1 / theta_trig
