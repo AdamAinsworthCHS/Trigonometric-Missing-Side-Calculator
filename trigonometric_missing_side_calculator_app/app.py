@@ -9,7 +9,9 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QApplication,
     QVBoxLayout,
-    QWidget
+    QWidget,
+    QGridLayout,
+    
 
 )
 
@@ -29,7 +31,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Widgets App")
 
         measure_theta_line = QDoubleSpinBox()
-        measure_theta_line.setRange(0, 90)
+        measure_theta_line.setRange(0, 89)
         known_side_length_line = QDoubleSpinBox()
         known_side_length_line.setRange(0, 999999999999)
         known_side_hoa_line = QComboBox()
@@ -47,13 +49,15 @@ class MainWindow(QMainWindow):
             "Adjacent"
         ])
         title_label = QLabel("Trigonometric Missing Side Calculator")
+        title_label.setIndent(0)
+        title_label.setMargin(5)
         result_label = QLabel("Results: ")
         measure_theta_line_label = QLabel("Measure of Theta")
         known_side_length_line_label = QLabel("Length of the Known Side")
         known_side_hoa_line_label = QLabel("HOA of the Known Side")
         unknown_side_hoa_line_label = QLabel("HOA of the Unknown Side")
         submit_button = QPushButton("Calculate")
-        layout = QVBoxLayout()
+        layout = QGridLayout()
         widgets = [
             title_label,
             measure_theta_line_label,
@@ -68,8 +72,17 @@ class MainWindow(QMainWindow):
             result_label
         ]
 
-        for w in widgets:
-            layout.addWidget(w)
+        layout.addWidget(title_label, 1, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(measure_theta_line_label, 2, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(measure_theta_line, 2, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(known_side_length_line_label, 3, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(known_side_length_line, 3, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(known_side_hoa_line_label, 4, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(known_side_hoa_line, 4, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(unknown_side_hoa_line_label, 5, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(unknown_side_hoa_line, 5, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(submit_button, 6, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(result_label, 6, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
 
         widget = QWidget()
         widget.setLayout(layout)
@@ -112,7 +125,6 @@ class MainWindow(QMainWindow):
                 theta_trig = (cos(radians(measure_theta_line_var)))
             elif trig_function == "tan":
                 theta_trig = (tan(radians(measure_theta_line_var)))
-            print(theta_trig)
             if trig_2 == "x":
                 missing_length = trig_1 / theta_trig
             else:
