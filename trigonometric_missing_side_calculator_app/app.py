@@ -94,7 +94,7 @@ class MainWindow(QMainWindow):
         def calculate():
             known_hoa_var = str(known_side_hoa_line.currentText())
             known_side_length_line_var = float(known_side_length_line.value())
-            measure_theta_line_var = degrees(measure_theta_line.value())
+            measure_theta_line_var = float(measure_theta_line.value())
             trig_function = find_trig_function()
             if trig_function == "error":
                 return
@@ -120,11 +120,12 @@ class MainWindow(QMainWindow):
                     trig_1 = "x"
                     trig_2 = known_side_length_line_var
             if trig_function == "sin":
-                theta_trig = (sin(radians(measure_theta_line_var)))
+                theta_trig = sin(radians(measure_theta_line_var))
             elif trig_function == "cos":
-                theta_trig = (cos(radians(measure_theta_line_var)))
+                theta_trig = cos(radians(measure_theta_line_var))
             elif trig_function == "tan":
-                theta_trig = (tan(radians(measure_theta_line_var)))
+                theta_trig = tan(radians(measure_theta_line_var))
+            print(theta_trig)
             if trig_2 == "x":
                 missing_length = trig_1 / theta_trig
             else:
