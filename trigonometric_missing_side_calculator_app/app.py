@@ -8,7 +8,6 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QMainWindow,
     QApplication,
-    QVBoxLayout,
     QWidget,
     QGridLayout,
     
@@ -20,7 +19,6 @@ from math import (
     cos,
     tan,
     radians,
-    degrees
 )
 
 # Subclass QMainWindow to customize your application's main window
@@ -31,7 +29,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Widgets App")
 
         measure_theta_line = QDoubleSpinBox()
-        measure_theta_line.setRange(0, 89)
+        measure_theta_line.setRange(0, 89.99)
         known_side_length_line = QDoubleSpinBox()
         known_side_length_line.setRange(0, 999999999999)
         known_side_hoa_line = QComboBox()
