@@ -106,14 +106,14 @@ class MainWindow(QMainWindow):
                     trig_1 = "x"
                     trig_2 = known_side_length_line_var
             elif trig_function == "cos":
-                if known_side_hoa_line == "Adjacent":
+                if known_hoa_var == "Adjacent":
                     trig_1 = known_side_length_line_var
                     trig_2 = "x"
                 else:
                     trig_1 = "x"
                     trig_2 = known_side_length_line_var
             elif trig_function == "tan":
-                if known_side_hoa_line == "Opposite":
+                if known_hoa_var == "Opposite":
                     trig_1 = known_side_length_line_var
                     trig_2 = "x"
                 else:
@@ -125,7 +125,7 @@ class MainWindow(QMainWindow):
                 theta_trig = cos(radians(measure_theta_line_var))
             elif trig_function == "tan":
                 theta_trig = tan(radians(measure_theta_line_var))
-            print(theta_trig)
+            print(trig_2)
             if trig_2 == "x":
                 missing_length = trig_1 / theta_trig
             else:
