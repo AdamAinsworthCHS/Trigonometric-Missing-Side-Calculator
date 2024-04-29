@@ -1,4 +1,5 @@
 import sys
+import controller
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
@@ -11,14 +12,6 @@ from PyQt6.QtWidgets import (
     QWidget,
     QGridLayout,
     
-
-)
-
-from math import (
-    sin,
-    cos,
-    tan,
-    radians,
 )
 
 # Subclass QMainWindow to customize your application's main window
@@ -56,19 +49,6 @@ class MainWindow(QMainWindow):
         unknown_side_hoa_line_label = QLabel("HOA of the Unknown Side")
         submit_button = QPushButton("Calculate")
         layout = QGridLayout()
-        widgets = [
-            title_label,
-            measure_theta_line_label,
-            measure_theta_line,
-            known_side_length_line_label,
-            known_side_length_line,
-            known_side_hoa_line_label,
-            known_side_hoa_line,
-            unknown_side_hoa_line_label,
-            unknown_side_hoa_line,
-            submit_button,
-            result_label
-        ]
 
         layout.addWidget(title_label, 1, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(measure_theta_line_label, 2, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
@@ -89,80 +69,20 @@ class MainWindow(QMainWindow):
         # to take up all the space in the window by default.
         self.setCentralWidget(widget)
 
-        def calculate():
-            known_hoa_var = str(known_side_hoa_line.currentText())
-            known_side_length_line_var = float(known_side_length_line.value())
-            measure_theta_line_var = float(measure_theta_line.value())
-            trig_function = find_trig_function()
-            if trig_function == "error":
-                return
-            if trig_function == "sin":
-                if known_hoa_var == "Opposite":
-                    trig_1 = known_side_length_line_var
-                    trig_2 = "x"
-                else:
-                    trig_1 = "x"
-                    trig_2 = known_side_length_line_var
-            elif trig_function == "cos":
-                if known_hoa_var == "Adjacent":
-                    trig_1 = known_side_length_line_var
-                    trig_2 = "x"
-                else:
-                    trig_1 = "x"
-                    trig_2 = known_side_length_line_var
-            elif trig_function == "tan":
-                if known_hoa_var == "Opposite":
-                    trig_1 = known_side_length_line_var
-                    trig_2 = "x"
-                else:
-                    trig_1 = "x"
-                    trig_2 = known_side_length_line_var
-            if trig_function == "sin":
-                theta_trig = sin(radians(measure_theta_line_var))
-            elif trig_function == "cos":
-                theta_trig = cos(radians(measure_theta_line_var))
-            elif trig_function == "tan":
-                theta_trig = tan(radians(measure_theta_line_var))
-            print(trig_2)
-            if trig_2 == "x":
-                missing_length = trig_1 / theta_trig
-            else:
-                missing_length = theta_trig * trig_2
-            result_label.setText("Results: " + str(missing_length))
+        def calculate_self():
+            hoa_known = str(known_side_hoa_line.currentText())
+            hoa_unknown = str(unknown_side_hoa_line.currentText())
+            known_length = float(known_side_length_line.value())
+            theta_measure = float(measure_theta_line.value())
+            results = controller.calculate(hoa_known, hoa_unknown, known_length, theta_measure)
+            result_label.setText(results)
+        
+        submit_button.clicked.connect(calculate_self)
 
-        submit_button.clicked.connect(calculate)
-
-        def find_trig_function():
-            known_hoa_var = str(known_side_hoa_line.currentText())
-            unknown_hoa_var = str(unknown_side_hoa_line.currentText())
-            if known_hoa_var == "Opposite" or unknown_hoa_var == "Opposite":
-                if known_hoa_var == "Hypotenuse" or unknown_hoa_var == "Hypotenuse":
-                    trig_function = "sin"
-                elif known_hoa_var == "Adjacent" or unknown_hoa_var == "Adjacent":
-                    trig_function = "tan"
-                else:
-                    result_label.setText("Results: " + "Error! Couldn't find trig function.")
-                    return ("error")
-            elif known_hoa_var == "Adjacent" or unknown_hoa_var == "Adjacent":
-                if known_hoa_var == "Hypotenuse" or unknown_hoa_var == "Hypotenuse":
-                    trig_function = "cos"
-                elif known_hoa_var == "Opposite" or unknown_hoa_var == "Opposite":
-                    trig_function = "tan"
-                else:
-                    result_label.setText("Results: " + "Error! Couldn't find trig function.")
-                    return ("error")
-            elif known_hoa_var == "Hypotenuse" or unknown_hoa_var == "Hypotenuse":
-                if known_hoa_var == "Adjacent" or unknown_hoa_var == "Adjacent":
-                    trig_function = "cos"
-                elif known_hoa_var == "opposite" or unknown_hoa_var == "opposite":
-                    trig_function = "sin"
-                else:
-                    result_label.setText("Results: " + "Error! Couldn't find trig function.")
-                    return ("error")
-            else:
-                result_label.setText("Results: " + "Error! Couldn't find trig function.")
-                return ("error")
-            return (trig_function)
+        
+        
+        
+        
 
 
 app = QApplication(sys.argv)
