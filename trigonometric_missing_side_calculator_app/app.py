@@ -11,8 +11,10 @@ from PyQt6.QtWidgets import (
     QApplication,
     QWidget,
     QGridLayout,
-    
+    QMainWindow
 )
+
+from PyQt6.QtGui import QFont
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -39,9 +41,13 @@ class MainWindow(QMainWindow):
             "Opposite",
             "Adjacent"
         ])
+        title_font = QFont("Agency Fb")
+        title_font.setPixelSize(25)
+        
         title_label = QLabel("Trigonometric Missing Side Calculator")
-        title_label.setIndent(0)
+        title_label.setFont(QFont(title_font))
         title_label.setMargin(5)
+        title_label.resize(200, 200)
         result_label = QLabel("Results: ")
         measure_theta_line_label = QLabel("Measure of Theta")
         known_side_length_line_label = QLabel("Length of the Known Side")
@@ -50,17 +56,19 @@ class MainWindow(QMainWindow):
         submit_button = QPushButton("Calculate")
         layout = QGridLayout()
 
-        layout.addWidget(title_label, 1, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(measure_theta_line_label, 2, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(title_label, 1, 1, 1, 7, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(measure_theta_line_label, 2, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(measure_theta_line, 2, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
-        layout.addWidget(known_side_length_line_label, 3, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(known_side_length_line_label, 3, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(known_side_length_line, 3, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
-        layout.addWidget(known_side_hoa_line_label, 4, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(known_side_hoa_line_label, 4, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(known_side_hoa_line, 4, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
-        layout.addWidget(unknown_side_hoa_line_label, 5, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(unknown_side_hoa_line_label, 5, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(unknown_side_hoa_line, 5, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
-        layout.addWidget(submit_button, 6, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(submit_button, 6, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(result_label, 6, 2, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+
+        self.setStyleSheet("color: lightBlue;" "background-color: rgb(10, 17, 66);")
 
         widget = QWidget()
         widget.setLayout(layout)
@@ -78,11 +86,6 @@ class MainWindow(QMainWindow):
             result_label.setText(results)
         
         submit_button.clicked.connect(calculate_self)
-
-        
-        
-        
-        
 
 
 app = QApplication(sys.argv)
