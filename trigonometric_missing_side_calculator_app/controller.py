@@ -1,6 +1,7 @@
 """controller.py
+This program takes user inputs given by app.py to do the calculations
+to find the missing side of a right triangle.
 by Adam Ainsworth
-calculates the missing side
 """
 
 from math import (
@@ -12,6 +13,7 @@ from math import (
 
 
 def calculate(known_hoa_var: str, unknown_hoa_var: str, known_side_length_line_var: float, measure_theta_line_var: float):
+    """Takes the user's inputs and calculates the missing side."""
     trig_function = find_trig_function(known_hoa_var, unknown_hoa_var)
     if trig_function == "error":
         return ("Error! Could not find trig function")
@@ -53,6 +55,8 @@ def calculate(known_hoa_var: str, unknown_hoa_var: str, known_side_length_line_v
 
 
 def find_trig_function(known_hoa_var, unknown_hoa_var):
+    """Finds the correct trigonometric function for the program
+    to use based on the user's inputs."""
     if known_hoa_var == "Opposite" or unknown_hoa_var == "Opposite":
         if known_hoa_var == "Hypotenuse" or unknown_hoa_var == "Hypotenuse":
             trig_function = "sin"

@@ -1,3 +1,9 @@
+"""
+app.py
+This program uses PyQT6 to create a calculator application that can
+find the missing side of a right triangle using trigonometric functions.
+By Adam Ainsworth"""
+
 import sys
 import controller
 
@@ -16,8 +22,9 @@ from PyQt6.QtWidgets import (
 
 from PyQt6.QtGui import QFont
 
-# Subclass QMainWindow to customize your application's main window
+
 class MainWindow(QMainWindow):
+    """Stores all of our widgets and their settings"""
     def __init__(self):
         super().__init__()
 
@@ -78,6 +85,8 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
         def calculate_self():
+            """Gives the user's inputs to controller.py to do the
+            actual calculation"""
             hoa_known = str(known_side_hoa_line.currentText())
             hoa_unknown = str(unknown_side_hoa_line.currentText())
             known_length = float(known_side_length_line.value())
